@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="theme-minimal">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title id="page-title">个人主页</title>
+
+  <!-- 加载所有主题 CSS -->
+  <link rel="stylesheet" href="themes/theme-minimal.css">
+  <link rel="stylesheet" href="themes/theme-blue.css">
+  <link rel="stylesheet" href="themes/theme-orange.css">
+  <link rel="stylesheet" href="themes/theme-green.css">
+
+  <style>
+    /* ========== 基础重置 & CSS 变量 ========== */
+    *, *::before, *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --bg-primary: #ffffff;
+      --bg-secondary: #f8f8f8;
+      --bg-card: #ffffff;
+      --text-primary: #1a1a1a;
+      --text-secondary: #555555;
+      --text-muted: #999999;
+      --accent: #000000;
+      --accent-hover: #333333;
+      --border: #e5e5e5;
+      --shadow: 0 1px 3px rgba(0,0,0,0.05);
+      --shadow-hover: 0 4px 20px rgba(0,0,0,0.08);
+      --tag-bg: #f0f0f0;
+      --tag-text: #333333;
+      --card-radius: 4px;
+      --btn-radius: 4px;
+      --max-width: 800px;
+      --font-heading: "Georgia", "Noto Serif SC", "SimSun", serif;
+      --font-body: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: var(--font-body);
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      line-height: 1.8;
+      transition: background 0.4s ease, color 0.4s ease;
+    }
+
+    a {
+      color: var(--accent);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    a:hover {
+      color: var(--accent-hover);
+    }
+
+    .container {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* ========== 导航栏 ========== */
+    .navbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      background: var(--bg-primary);
+      border-bottom: 1px solid var(--border);
+      transition: background 0.4s ease, border-color 0.4s ease;
+    }
+    .navbar .container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      height: 56px;
+    }
+    .navbar .logo {
+      font-family: var(--font-heading);
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--text-primary);
+    }
+    .nav-links {
+      display: flex;
+      gap: 20px;
+      list-style: none;
+      font-size: 0.9rem;
+    }
+    .nav-links a {
+      color: var(--text-secondary);
+      transition: color 0.2s;
+    }
+    .nav-links a:hover {
+      color: var(--accent);
+    }
+
+    /* ========== 英雄区 ========== */
+    .hero-section {
+      padding: 120px 0 80px;
+      text-align: center;
+      transition: background 0.4s ease;
+    }
+    .hero-avatar {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin-bottom: 24px;
+      border: 3px solid var(--border);
+      transition: border-color 0.4s ease;
+    }
+    .hero-avatar-placeholder {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      margin: 0 auto 24px;
+      background: var(--bg-secondary);
+      border: 3px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2.5rem;
+      color: var(--text-muted);
+    }
+    .hero-name {
+      font-family: var(--font-heading);
+      font-size: 2.4rem;
+      font-weight: 700;
+      margin-bottom: 8px;
+      letter-spacing: 0.02em;
+    }
+    .hero-title {
+      font-size: 1.15rem;
+      color: var(--text-secondary);
+      min-height: 1.6em;
+    }
+    .hero-title .cursor {
+      display: inline-block;
+      width: 2px;
+      height: 1.1em;
+      background: var(--accent);
+      margin-left: 2px;
+      vertical-align: text-bottom;
+      animation: blink 0.8s infinite;
+    }
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0; }
+    }
+
+    /* ========== 通用区块 ========== */
+    .section {
+      padding: 60px 0;
+    }
+    .section-title {
+      font-family: var(--font-heading);
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: 32px;
+      text-align: center;
+    }
+    .section-bio {
+      font-size: 1.05rem;
+      color: var(--text-secondary);
+      max-width: 650px;
+      margin: 0 auto;
+      text-align: center;
+      line-height: 2;
+    }
+
+    /* ========== 技能标签 ========== */
+    .skills-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 10px;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+    .skill-tag {
+      display: inline-block;
+      padding: 6px 18px;
+      font-size: 0.9rem;
+      background: var(--tag-bg);
+      color: var(--tag-text);
+      border-radius: var(--btn-radius);
+      transition: transform 0.2s, background 0.3s, color 0.3s;
+      cursor: default;
+    }
+    .skill-tag:hover {
+      transform: translateY(-2px);
+    }
+
+    /* ========== 社交链接 ========== */
+    .social-container {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 14px;
+    }
+    .social-link {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 48px;
+      height: 48px;
+      border-radius: var(--btn-radius);
+      background: var(--bg-secondary);
+      color: var(--text-secondary);
+      font-size: 1.2rem;
+      text-decoration: none;
+      transition: all 0.25s ease;
+      border: 1px solid transparent;
+    }
+    .social-link:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-hover);
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    /* ========== 作品展示 ========== */
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 24px;
+    }
+    .project-card {
+      background: var(--bg-card);
+      border-radius: var(--card-radius);
+      padding: 28px;
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border);
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+      cursor: pointer;
+    }
+    .project-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-hover);
+    }
+    .project-card h3 {
+      font-family: var(--font-heading);
+      font-size: 1.15rem;
+      margin-bottom: 10px;
+      color: var(--text-primary);
+    }
+    .project-card p {
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+      line-height: 1.7;
+    }
+    .project-card .project-link {
+      display: inline-block;
+      margin-top: 14px;
+      font-size: 0.85rem;
+      color: var(--accent);
+      font-weight: 500;
+    }
+
+    /* ========== 模板切换器 ========== */
+    .theme-switcher {
+      position: fixed;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 10px;
+      background: var(--bg-card);
+      padding: 8px 16px;
+      border-radius: 50px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.12);
+      z-index: 100;
+      border: 1px solid var(--border);
+      transition: background 0.4s ease, border-color 0.4s ease;
+    }
+    .theme-dot {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      cursor: pointer;
+      border: 2px solid transparent;
+      transition: all 0.25s ease;
+      position: relative;
+    }
+    .theme-dot:hover {
+      transform: scale(1.15);
+    }
+    .theme-dot.active {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 2px var(--bg-card), 0 0 0 4px var(--accent);
+    }
+    .theme-dot[data-theme-value="theme-minimal"] {
+      background: #ffffff;
+      border: 2px solid #ccc;
+    }
+    .theme-dot[data-theme-value="theme-blue"] {
+      background: #1a2744;
+    }
+    .theme-dot[data-theme-value="theme-orange"] {
+      background: #f0833a;
+    }
+    .theme-dot[data-theme-value="theme-green"] {
+      background: #4a9e4a;
+    }
+    .theme-label {
+      position: absolute;
+      bottom: -22px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 0.65rem;
+      white-space: nowrap;
+      color: var(--text-muted);
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
+    .theme-dot:hover .theme-label {
+      opacity: 1;
+    }
+
+    /* ========== 页脚 ========== */
+    .footer {
+      padding: 32px 0 100px;
+      text-align: center;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      border-top: 1px solid var(--border);
+      margin-top: 40px;
+      transition: border-color 0.4s ease;
+    }
+
+    /* ========== 响应式 ========== */
+    @media (max-width: 768px) {
+      .hero-name {
+        font-size: 1.8rem;
+      }
+      .hero-title {
+        font-size: 1rem;
+      }
+      .hero-section {
+        padding: 100px 0 50px;
+      }
+      .section {
+        padding: 40px 0;
+      }
+      .projects-grid {
+        grid-template-columns: 1fr;
+      }
+      .nav-links {
+        gap: 12px;
+        font-size: 0.8rem;
+      }
+      .navbar .container {
+        height: 48px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- 导航栏 -->
+  <nav class="navbar">
+    <div class="container">
+      <a href="#" class="logo" id="nav-logo">个人主页</a>
+      <ul class="nav-links">
+        <li><a href="#about">关于</a></li>
+        <li><a href="#skills">技能</a></li>
+        <li><a href="#projects">作品</a></li>
+        <li><a href="#contact">联系</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- 英雄区 -->
+  <section class="hero-section" id="home">
+    <div class="container">
+      <img id="hero-avatar" class="hero-avatar" src="" alt="头像" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+      <div class="hero-avatar-placeholder" style="display:none;">👤</div>
+      <h1 class="hero-name" id="hero-name">姓名</h1>
+      <p class="hero-title">
+        <span id="hero-title-text"></span><span class="cursor"></span>
+      </p>
+    </div>
+  </section>
+
+  <!-- 关于我 -->
+  <section class="section" id="about">
+    <div class="container">
+      <h2 class="section-title">关于我</h2>
+      <p class="section-bio" id="bio-text"></p>
+    </div>
+  </section>
+
+  <!-- 技能标签 -->
+  <section class="section" id="skills">
+    <div class="container">
+      <h2 class="section-title">技能</h2>
+      <div class="skills-container" id="skills-container"></div>
+    </div>
+  </section>
+
+  <!-- 社交链接 -->
+  <section class="section" id="contact">
+    <div class="container">
+      <h2 class="section-title">联系我</h2>
+      <div class="social-container" id="social-container"></div>
+    </div>
+  </section>
+
+  <!-- 作品展示 -->
+  <section class="section" id="projects">
+    <div class="container">
+      <h2 class="section-title">作品</h2>
+      <div class="projects-grid" id="projects-container"></div>
+    </div>
+  </section>
+
+  <!-- 页脚 -->
+  <footer class="footer">
+    <div class="container">
+      <p id="footer-text"></p>
+    </div>
+  </footer>
+
+  <!-- 模板切换器 -->
+  <div class="theme-switcher" id="theme-switcher">
+    <div class="theme-dot" data-theme-value="theme-minimal" title="极简白">
+      <span class="theme-label">极简白</span>
+    </div>
+    <div class="theme-dot" data-theme-value="theme-blue" title="深邃蓝">
+      <span class="theme-label">深邃蓝</span>
+    </div>
+    <div class="theme-dot" data-theme-value="theme-orange" title="温暖橙">
+      <span class="theme-label">温暖橙</span>
+    </div>
+    <div class="theme-dot" data-theme-value="theme-green" title="自然绿">
+      <span class="theme-label">自然绿</span>
+    </div>
+  </div>
+
+  <!-- 加载配置文件 -->
+  <script src="config.js"></script>
+
+  <script>
+    (function() {
+      // ========== 获取 DOM 元素 ==========
+      const $ = (sel) => document.querySelector(sel);
+      const $$ = (sel) => document.querySelectorAll(sel);
+
+      // ========== 主题切换 ==========
+      function setTheme(themeName) {
+        document.documentElement.setAttribute('data-theme', themeName);
+        localStorage.setItem('site-theme', themeName);
+
+        // 更新切换器选中状态
+        $$('.theme-dot').forEach(dot => {
+          dot.classList.toggle('active', dot.dataset.themeValue === themeName);
+        });
+      }
+
+      function initTheme() {
+        const saved = localStorage.getItem('site-theme');
+        const theme = saved || CONFIG.defaultTheme || 'theme-minimal';
+        setTheme(theme);
+
+        // 绑定点击事件
+        $$('.theme-dot').forEach(dot => {
+          dot.addEventListener('click', () => {
+            setTheme(dot.dataset.themeValue);
+          });
+        });
+      }
+
+      // ========== 渲染页面内容 ==========
+      function renderPage() {
+        // 页面标题
+        document.title = CONFIG.siteTitle || CONFIG.name + '的个人主页';
+        $('#nav-logo').textContent = CONFIG.siteTitle || CONFIG.name;
+        $('#page-title').textContent = CONFIG.siteTitle || CONFIG.name + '的个人主页';
+
+        // 英雄区
+        $('#hero-name').textContent = CONFIG.name;
+        const avatar = $('#hero-avatar');
+        const placeholder = $('.hero-avatar-placeholder');
+        if (CONFIG.avatar) {
+          avatar.src = CONFIG.avatar;
+          avatar.style.display = '';
+          placeholder.style.display = 'none';
+        } else {
+          avatar.style.display = 'none';
+          placeholder.style.display = 'flex';
+        }
+
+        // 打字机动画
+        const titleText = CONFIG.title || '';
+        const titleEl = $('#hero-title-text');
+        let charIndex = 0;
+        function typeWriter() {
+          if (charIndex < titleText.length) {
+            titleEl.textContent += titleText.charAt(charIndex);
+            charIndex++;
+            setTimeout(typeWriter, 80 + Math.random() * 60);
+          }
+        }
+        setTimeout(typeWriter, 400);
+
+        // 关于我
+        $('#bio-text').textContent = CONFIG.bio || '';
+
+        // 技能标签
+        const skillsContainer = $('#skills-container');
+        skillsContainer.innerHTML = '';
+        if (CONFIG.skills && CONFIG.skills.length > 0) {
+          CONFIG.skills.forEach(skill => {
+            const tag = document.createElement('span');
+            tag.className = 'skill-tag';
+            tag.textContent = skill;
+            skillsContainer.appendChild(tag);
+          });
+        }
+
+        // 社交链接
+        const socialContainer = $('#social-container');
+        socialContainer.innerHTML = '';
+        const socialIcons = {
+          github:    { icon: '🐙', label: 'GitHub' },
+          email:     { icon: '📧', label: 'Email' },
+          twitter:   { icon: '🐦', label: 'Twitter' },
+          wechat:    { icon: '💬', label: '微信' },
+          bilibili:  { icon: '📺', label: 'B站' },
+          zhihu:     { icon: '❓', label: '知乎' }
+        };
+        if (CONFIG.social) {
+          Object.keys(CONFIG.social).forEach(key => {
+            const url = CONFIG.social[key];
+            if (url && socialIcons[key]) {
+              const a = document.createElement('a');
+              a.className = 'social-link';
+              a.href = url;
+              a.target = '_blank';
+              a.rel = 'noopener';
+              a.title = socialIcons[key].label;
+              a.textContent = socialIcons[key].icon;
+              socialContainer.appendChild(a);
+            }
+          });
+        }
+
+        // 作品展示
+        const projectsContainer = $('#projects-container');
+        projectsContainer.innerHTML = '';
+        if (CONFIG.projects && CONFIG.projects.length > 0) {
+          CONFIG.projects.forEach(project => {
+            const card = document.createElement('div');
+            card.className = 'project-card';
+            card.innerHTML = `
+              <h3>${project.title}</h3>
+              <p>${project.description}</p>
+              ${project.link ? `<a class="project-link" href="${project.link}" target="_blank" rel="noopener">查看详情 →</a>` : ''}
+            `;
+            // 整张卡片可点击
+            if (project.link) {
+              card.style.cursor = 'pointer';
+              card.addEventListener('click', (e) => {
+                if (e.target.tagName !== 'A') {
+                  window.open(project.link, '_blank');
+                }
+              });
+            }
+            projectsContainer.appendChild(card);
+          });
+        }
+
+        // 页脚
+        $('#footer-text').textContent = CONFIG.footerText || '';
+      }
+
+      // ========== 初始化 ==========
+      initTheme();
+      renderPage();
+    })();
+  </script>
+</body>
+</html>

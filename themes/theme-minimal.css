@@ -1,0 +1,56 @@
+/* ==========================================
+   模板一：极简白
+   白色背景，黑色文字，极简线条风格
+   适合专业、正式的个人形象展示
+   ========================================== */
+
+[data-theme="theme-minimal"] {
+  --bg-primary: #ffffff;
+  --bg-secondary: #f8f8f8;
+  --bg-card: #ffffff;
+  --text-primary: #1a1a1a;
+  --text-secondary: #555555;
+  --text-muted: #999999;
+  --accent: #000000;
+  --accent-hover: #333333;
+  --border: #e5e5e5;
+  --shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  --shadow-hover: 0 4px 20px rgba(0, 0, 0, 0.08);
+  --tag-bg: #f0f0f0;
+  --tag-text: #333333;
+  --hero-gradient: #ffffff;
+  --card-radius: 4px;
+  --btn-radius: 4px;
+  --font-heading: "Georgia", "Noto Serif SC", "SimSun", serif;
+  --font-body: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif;
+}
+
+[data-theme="theme-minimal"] .hero-section {
+  border-bottom: 1px solid var(--border);
+}
+
+[data-theme="theme-minimal"] .section-title {
+  font-family: var(--font-heading);
+  font-weight: 400;
+  letter-spacing: 0.05em;
+}
+
+[data-theme="theme-minimal"] .skill-tag {
+  border: 1px solid var(--border);
+  background: transparent;
+  border-radius: 2px;
+}
+
+[data-theme="theme-minimal"] .project-card {
+  border: 1px solid var(--border);
+  border-radius: 2px;
+}
+
+[data-theme="theme-minimal"] .social-link {
+  border: 1px solid var(--border);
+  border-radius: 50%;
+}
+
+[data-theme="theme-minimal"] .theme-dot {
+  border-radius: 2px;
+}

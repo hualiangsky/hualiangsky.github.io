@@ -1,0 +1,53 @@
+/* ==========================================
+   模板四：自然绿
+   绿色自然风，柔和舒适
+   适合生活分享、旅行、摄影类个人主页
+   ========================================== */
+
+[data-theme="theme-green"] {
+  --bg-primary: #f6f9f6;
+  --bg-secondary: #eef3ee;
+  --bg-card: #ffffff;
+  --text-primary: #1a2e1a;
+  --text-secondary: #4a5c4a;
+  --text-muted: #7a8a7a;
+  --accent: #4a9e4a;
+  --accent-hover: #3a8a3a;
+  --border: #d5e5d5;
+  --shadow: 0 2px 12px rgba(74, 158, 74, 0.06);
+  --shadow-hover: 0 8px 30px rgba(74, 158, 74, 0.12);
+  --tag-bg: #e8f5e8;
+  --tag-text: #2d7a2d;
+  --hero-gradient: linear-gradient(135deg, #eef3ee 0%, #dce8dc 50%, #eef3ee 100%);
+  --card-radius: 8px;
+  --btn-radius: 8px;
+  --font-heading: "Georgia", "Noto Serif SC", "SimSun", serif;
+  --font-body: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif;
+}
+
+[data-theme="theme-green"] .hero-section {
+  background: var(--hero-gradient);
+}
+
+[data-theme="theme-green"] .skill-tag {
+  border-radius: 6px;
+  font-weight: 500;
+}
+
+[data-theme="theme-green"] .project-card {
+  border-radius: 12px;
+  border-left: 4px solid var(--accent);
+}
+
+[data-theme="theme-green"] .social-link {
+  border-radius: 12px;
+  background: var(--bg-secondary);
+}
+
+[data-theme="theme-green"] .theme-dot {
+  border-radius: 50%;
+}
+
+[data-theme="theme-green"] .section-title {
+  color: var(--accent);
+}

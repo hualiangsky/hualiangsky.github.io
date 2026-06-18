@@ -1,0 +1,59 @@
+/* ==========================================
+   模板三：温暖橙
+   暖色调，圆角卡片，亲切友好的风格
+   适合创意、设计类个人主页
+   ========================================== */
+
+[data-theme="theme-orange"] {
+  --bg-primary: #fffaf5;
+  --bg-secondary: #fff5eb;
+  --bg-card: #ffffff;
+  --text-primary: #2d1f0e;
+  --text-secondary: #6b5a4a;
+  --text-muted: #a89880;
+  --accent: #f0833a;
+  --accent-hover: #e0692a;
+  --border: #f0dcc8;
+  --shadow: 0 2px 12px rgba(240, 131, 58, 0.08);
+  --shadow-hover: 0 8px 30px rgba(240, 131, 58, 0.15);
+  --tag-bg: #fff0e0;
+  --tag-text: #c06020;
+  --hero-gradient: linear-gradient(135deg, #fff5eb 0%, #ffe8d5 50%, #fff5eb 100%);
+  --card-radius: 16px;
+  --btn-radius: 50px;
+  --font-heading: "Georgia", "KaiTi", "STKaiti", serif;
+  --font-body: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif;
+}
+
+[data-theme="theme-orange"] .hero-section {
+  background: var(--hero-gradient);
+}
+
+[data-theme="theme-orange"] .skill-tag {
+  border-radius: 20px;
+  font-weight: 500;
+}
+
+[data-theme="theme-orange"] .project-card {
+  border-radius: 20px;
+  overflow: hidden;
+}
+
+[data-theme="theme-orange"] .social-link {
+  border-radius: 16px;
+  background: var(--bg-secondary);
+}
+
+[data-theme="theme-orange"] .theme-dot {
+  border-radius: 50%;
+}
+
+[data-theme="theme-orange"] .section-title::after {
+  content: "";
+  display: block;
+  width: 40px;
+  height: 3px;
+  background: var(--accent);
+  margin-top: 8px;
+  border-radius: 2px;
+}
